@@ -25,6 +25,8 @@ class PageTest extends \PHPUnit\Framework\TestCase
         $testOutput = new \stdClass();
         $testOutput->template = \Slab\Controllers\Page::DEFAULT_SHELL_TEMPLATE;
         $testOutput->subTemplate = 'pages' . DIRECTORY_SEPARATOR . 'page.php';
+        $testOutput->title = 'SlabPHP';
+        $testOutput->description = 'This is a SlabPHP application.';
 
         $this->assertEquals(\Slab\Controllers\Page::DEFAULT_DISPLAY_RESOLVER, $response->getResolver());
         $this->assertEquals(200, $response->getStatusCode());
@@ -51,6 +53,8 @@ class PageTest extends \PHPUnit\Framework\TestCase
         $testOutput->template = \Slab\Controllers\Page::DEFAULT_SHELL_TEMPLATE;
         $testOutput->subTemplate = 'pages' . DIRECTORY_SEPARATOR . 'mocks' . DIRECTORY_SEPARATOR . 'pageextension.php';
         $testOutput->testValue = 'parameterparameter';
+        $testOutput->title = 'extension';
+        $testOutput->description = 'description';
 
         $this->assertEquals(\Slab\Controllers\Page::DEFAULT_DISPLAY_RESOLVER, $response->getResolver());
         $this->assertEquals(200, $response->getStatusCode());

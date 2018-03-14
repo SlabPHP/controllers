@@ -13,6 +13,16 @@ class PageExtension extends \Slab\Controllers\Page
     /**
      * @var string
      */
+    protected $title = 'extension';
+
+    /**
+     * @var string
+     */
+    protected $description = 'description';
+
+    /**
+     * @var string
+     */
     protected $testValue = 'default';
 
     /**

@@ -17,6 +17,16 @@ class Page extends Sequenced implements \Slab\Components\Router\RoutableControll
     /**
      * @var string
      */
+    protected $title = 'SlabPHP';
+
+    /**
+     * @var string
+     */
+    protected $description = 'This is a SlabPHP application.';
+
+    /**
+     * @var string
+     */
     protected $shellTemplate;
 
     /**
@@ -47,7 +57,9 @@ class Page extends Sequenced implements \Slab\Components\Router\RoutableControll
         $this->inputs
             ->addCall('determineContentType')
             ->addCall('determineDisplayResolver')
-            ->addCall('determineShellTemplate');
+            ->addCall('determineShellTemplate')
+            ->addCall('determinePageTitle')
+            ->addCall('determinePageDescription');
     }
 
     /**
@@ -75,6 +87,30 @@ class Page extends Sequenced implements \Slab\Components\Router\RoutableControll
     }
 
     /**
+     * Determine sub template
+     */
+    protected function determineSubTemplate()
+    {
+        $this->subTemplate = $this->getRoutedParameter('subTemplate', false);
+    }
+
+    /**
+     * Determine page title
+     */
+    protected function determinePageTitle()
+    {
+        $this->title = $this->getRoutedParameter('pageTitle', $this->title);
+    }
+
+    /**
+     * Determine page description
+     */
+    protected function determinePageDescription()
+    {
+        $this->description = $this->getRoutedParameter('pageDescription', $this->description);
+    }
+
+    /**
      * Set operations sequence
      */
     protected function setOperations()
@@ -88,6 +124,8 @@ class Page extends Sequenced implements \Slab\Components\Router\RoutableControll
      */
     protected function fetchSubTemplateName()
     {
+        if (!empty($this->subTemplate)) return;
+
         $className = get_called_class();
 
         if (mb_strpos($className, 'Controllers') === false)
@@ -121,7 +159,9 @@ class Page extends Sequenced implements \Slab\Components\Router\RoutableControll
     {
         $this->outputs
             ->addCall('setShellTemplateInOutput')
-            ->addCall('setSubTemplateInOutput');
+            ->addCall('setSubTemplateInOutput')
+            ->addCall('setTitleInOutput')
+            ->addCall('setDescriptionInOutput');
     }
 
     /**
@@ -138,6 +178,22 @@ class Page extends Sequenced implements \Slab\Components\Router\RoutableControll
     protected function setSubTemplateInOutput()
     {
         $this->data->subTemplate = $this->subTemplate;
+    }
+
+    /**
+     * Set title in output
+     */
+    protected function setTitleInOutput()
+    {
+        $this->data->title = $this->title;
+    }
+
+    /**
+     * Set description in template
+     */
+    protected function setDescriptionInOutput()
+    {
+        $this->data->description = $this->description;
     }
 
     /**
