@@ -17,8 +17,11 @@ class PageTest extends \PHPUnit\Framework\TestCase
     {
         $page = new \Slab\Controllers\Page();
 
-        $page->setRouteReference(new Mocks\Route());
-        $page->setSystemReference(new Mocks\System());
+        $route = new \Slab\Tests\Components\Mocks\Router\Route();
+        $system = new \Slab\Tests\Components\Mocks\System();
+
+        $page->setRouteReference($route);
+        $page->setSystemReference($system);
 
         $response = $page->executeControllerLifecycle();
 
@@ -41,11 +44,13 @@ class PageTest extends \PHPUnit\Framework\TestCase
     {
         $page = new \Slab\Tests\Controllers\Mocks\PageExtension();
 
-        $route = new Mocks\Route();
+        $route = new \Slab\Tests\Components\Mocks\Router\Route();
+        $system = new \Slab\Tests\Components\Mocks\System();
+
         $route->setParameters((object)['testValue'=>'parameter']);
 
         $page->setRouteReference($route);
-        $page->setSystemReference(new Mocks\System());
+        $page->setSystemReference($system);
 
         $response = $page->executeControllerLifecycle();
 

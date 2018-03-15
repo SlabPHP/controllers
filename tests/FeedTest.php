@@ -17,10 +17,9 @@ class FeedTest extends \PHPUnit\Framework\TestCase
     {
         $page = new \Slab\Controllers\Feed();
 
-        $route = new Mocks\Route();
+        $route = new \Slab\Tests\Components\Mocks\Router\Route();
+        $system = new \Slab\Tests\Components\Mocks\System();
         $route->setParameters((object)['feedType'=>'json']);
-
-        $system = new Mocks\System();
 
         $page->setRouteReference($route);
         $page->setSystemReference($system);
@@ -46,11 +45,13 @@ class FeedTest extends \PHPUnit\Framework\TestCase
 
         $_GET['callback'] = 'something';
 
-        $mocks = new Mocks\Route();
-        $mocks->setParameters((object)['feedType'=>'json']);
+        $route = new \Slab\Tests\Components\Mocks\Router\Route();
+        $system = new \Slab\Tests\Components\Mocks\System();
 
-        $page->setRouteReference($mocks);
-        $page->setSystemReference(new Mocks\System());
+        $route->setParameters((object)['feedType'=>'json']);
+
+        $page->setRouteReference($route);
+        $page->setSystemReference($system);
 
         $response = $page->executeControllerLifecycle();
 
@@ -71,10 +72,10 @@ class FeedTest extends \PHPUnit\Framework\TestCase
     {
         $page = new \Slab\Controllers\Feed();
 
-        $route = new Mocks\Route();
-        $route->setParameters((object)['feedType'=>'xml']);
+        $route = new \Slab\Tests\Components\Mocks\Router\Route();
+        $system = new \Slab\Tests\Components\Mocks\System();
 
-        $system = new Mocks\System();
+        $route->setParameters((object)['feedType'=>'xml']);
 
         $page->setRouteReference($route);
         $page->setSystemReference($system);
@@ -98,11 +99,13 @@ class FeedTest extends \PHPUnit\Framework\TestCase
     {
         $page = new \Slab\Controllers\Feed();
 
-        $mocks = new Mocks\Route();
-        $mocks->setParameters((object)['feedType'=>'blargh']);
+        $route = new \Slab\Tests\Components\Mocks\Router\Route();
+        $system = new \Slab\Tests\Components\Mocks\System();
 
-        $page->setRouteReference($mocks);
-        $page->setSystemReference(new Mocks\System());
+        $route->setParameters((object)['feedType'=>'blargh']);
+
+        $page->setRouteReference($route);
+        $page->setSystemReference($system);
 
         $response = $page->executeControllerLifecycle();
         $this->assertEquals(500, $response->getStatusCode());

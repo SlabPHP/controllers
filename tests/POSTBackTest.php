@@ -19,8 +19,8 @@ class POSTBackTest extends \PHPUnit\Framework\TestCase
 
         $page = new \Slab\Controllers\POSTBack();
 
-        $route = new Mocks\Route();
-        $system = new Mocks\System();
+        $route = new \Slab\Tests\Components\Mocks\Router\Route();
+        $system = new \Slab\Tests\Components\Mocks\System();
 
         $page->setRouteReference($route);
         $page->setSystemReference($system);
@@ -43,8 +43,8 @@ class POSTBackTest extends \PHPUnit\Framework\TestCase
     {
         $page = new \Slab\Controllers\POSTBack();
 
-        $route = new Mocks\Route();
-        $system = new Mocks\System();
+        $route = new \Slab\Tests\Components\Mocks\Router\Route();
+        $system = new \Slab\Tests\Components\Mocks\System();
 
         $page->setRouteReference($route);
         $page->setSystemReference($system);

@@ -100,7 +100,7 @@ abstract class Sequenced
 
         if (!empty($message) && $this->system->log())
         {
-            $this->system->log()->error($message, $exception);
+            $this->system->log()->error($message, [$exception]);
         }
     }
 }
