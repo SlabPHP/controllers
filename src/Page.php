@@ -58,6 +58,7 @@ class Page extends Sequenced implements \Slab\Components\Router\RoutableControll
             ->addCall('determineContentType')
             ->addCall('determineDisplayResolver')
             ->addCall('determineShellTemplate')
+            ->addCall('determineSubTemplate')
             ->addCall('determinePageTitle')
             ->addCall('determinePageDescription');
     }
