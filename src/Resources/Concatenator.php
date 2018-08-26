@@ -55,18 +55,34 @@ abstract class Concatenator extends \Slab\Controllers\Sequenced implements \Slab
             return;
         }
 
-        foreach ($this->route->getParameters()->files as $file)
+        if (is_array($this->route->getParameters()->files))
         {
-            $file = $this->getActualFilename($file);
+            foreach ($this->route->getParameters()->files as $file)
+            {
+                $this->addFileObject((string) $file);
+            }
+        }
+        else
+        {
+            $this->addFileObject((string) $this->route->getParameters()->files);
+        }
+    }
 
-            try
-            {
-                $this->concatenator->addObject($file, []);
-            }
-            catch (\Exception $e)
-            {
-                $this->system->log()->error("Failed to add concatenator object: " . $file);
-            }
+    /**
+     * Add a file object
+     * @param string $file
+     */
+    private function addFileObject(string $file)
+    {
+        $file = $this->getActualFilename($file);
+
+        try
+        {
+            $this->concatenator->addObject($file, []);
+        }
+        catch (\Exception $e)
+        {
+            $this->system->log()->error("Failed to add concatenator object: " . $file);
         }
     }
 

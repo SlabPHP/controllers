@@ -11,9 +11,32 @@ namespace Slab\Tests\Controllers\Resources;
 class CSSTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * Test page controller creation
+     * @return array
      */
-    public function testController()
+    public function providerController()
+    {
+        return [
+            [
+                [
+                    'test.css',
+                    'test2.css',
+                ],
+                '/* styles/test.css */' . PHP_EOL . '#hello {}' . PHP_EOL . '/* styles/test2.css */' . PHP_EOL . '.world {}',
+            ],
+            [
+                'test.css',
+                '/* styles/test.css */' . PHP_EOL . '#hello {}',
+            ]
+        ];
+    }
+
+    /**
+     * Test page controller creation
+     * @param array $files
+     * @param string $expected
+     * @dataProvider providerController
+     */
+    public function testController($files, $expected)
     {
         $css = new \Slab\Controllers\Resources\CSS();
 
@@ -32,10 +55,7 @@ class CSSTest extends \PHPUnit\Framework\TestCase
         $system->setStack($bundleStack);
 
         $parameters = new \stdClass();
-        $parameters->files = [
-            'test.css',
-            'test2.css',
-        ];
+        $parameters->files = $files;
         $route->setParameters($parameters);
 
         $css->setRouteReference($route);
@@ -43,15 +63,10 @@ class CSSTest extends \PHPUnit\Framework\TestCase
 
         $response = $css->executeControllerLifecycle();
 
-        $testOutput = '/* styles/test.css */' . PHP_EOL;
-        $testOutput.= '#hello {}' . PHP_EOL;
-        $testOutput.= '/* styles/test2.css */' . PHP_EOL;
-        $testOutput.= '.world {}';
-
         $this->assertEquals(\Slab\Controllers\Resources\CSS::DEFAULT_DISPLAY_RESOLVER, $response->getResolver());
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals(['Content-type'=>'text/css'], $response->getHeaders());
-        $this->assertContains($testOutput, $response->getData());
+        $this->assertContains($expected, $response->getData());
     }
 }
 
