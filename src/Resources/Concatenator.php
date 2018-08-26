@@ -72,7 +72,7 @@ abstract class Concatenator extends \Slab\Controllers\Sequenced implements \Slab
      * Add a file object
      * @param string $file
      */
-    private function addFileObject(string $file)
+    private function addFileObject($file)
     {
         $file = $this->getActualFilename($file);
 
