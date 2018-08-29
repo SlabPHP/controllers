@@ -14,6 +14,8 @@ abstract class Sequenced
     use Traits\RouteReference;
     use Traits\Sequenced;
 
+    const ERROR_DISPLAY_RESOLVER = '\Slab\Display\Resolvers\PlainText';
+
     /**
      * @var string
      */
@@ -74,12 +76,38 @@ abstract class Sequenced
         }
         catch (\Exception $exception)
         {
+            $this->executeQueues = false;
             $this->system->log()->error("An error occurred while processing the controller sequence.", $exception);
+        }
+
+        if (empty($this->executeQueues)) {
+            return $this->buildFailedOutputObject();
         }
 
         $this->displayHeaders['Content-type'] = $this->contentType;
 
         return $this->buildOutputObject();
+    }
+
+    /**
+     * When a call queue fails, this method will be used
+     *
+     * @return \Slab\Components\Output\ControllerResponseInterface
+     */
+    protected function buildFailedOutputObject()
+    {
+        $error = '<!DOCTYPE html><html><head><title>An Error Occurred</title></head><body>';
+        $error.= '<h1>Error ' . $this->statusCode . '</h1>';
+        $error.= '<p>Sorry about that, please try again later!</p></body></html>';
+
+        $output = new \Slab\Controllers\Response(
+            static::ERROR_DISPLAY_RESOLVER,
+            $error,
+            $this->statusCode,
+            ['Content-type' => 'text/html']
+        );
+
+        return $output;
     }
 
     /**
