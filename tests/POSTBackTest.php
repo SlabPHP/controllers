@@ -51,9 +51,12 @@ class POSTBackTest extends \PHPUnit\Framework\TestCase
 
         $response = $page->executeControllerLifecycle();
 
-        $this->assertEquals(\Slab\Controllers\Sequenced::ERROR_DISPLAY_RESOLVER, $response->getResolver());
+        $testOutput = new \stdClass();
+        $testOutput->url = null;
+
+        $this->assertEquals(\Slab\Controllers\POSTBack::ERROR_DISPLAY_RESOLVER, $response->getResolver());
         $this->assertEquals(500, $response->getStatusCode());
-        $this->assertEquals(['Content-type'=>'text/html'], $response->getHeaders());
-        $this->assertContains('Error 500', $response->getData());
+        $this->assertEquals([], $response->getHeaders());
+        $this->assertEquals($testOutput, $response->getData());
     }
 }

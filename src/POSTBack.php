@@ -11,6 +11,7 @@ namespace Slab\Controllers;
 class POSTBack extends Sequenced
 {
     const POSTBACK_DISPLAY_RESOLVER = '\Slab\Display\Resolvers\Redirect';
+    const ERROR_DISPLAY_RESOLVER = '\Slab\Display\Resolvers\Redirect';
 
     /**
      * @var \stdClass
@@ -93,6 +94,16 @@ class POSTBack extends Sequenced
         }
 
         $this->redirectURL = $route->getPath($this->redirectParameters);
+    }
+
+    /**
+     * Carry on with our regular lives on an error
+     *
+     * @return \Slab\Components\Output\ControllerResponseInterface
+     */
+    protected function buildFailedOutputObject()
+    {
+        return $this->buildOutputObject();
     }
 
     /**
