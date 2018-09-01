@@ -77,7 +77,10 @@ abstract class Sequenced
         catch (\Exception $exception)
         {
             $this->executeQueues = false;
-            $this->system->log()->error("An error occurred while processing the controller sequence.", $exception);
+            $this->system->log()->error(
+                "An error occurred while processing the controller sequence.",
+                [$exception]
+            );
         }
 
         if (empty($this->executeQueues)) {
