@@ -129,7 +129,7 @@ class Page extends Sequenced implements \Slab\Components\Router\RoutableControll
 
         $className = get_called_class();
 
-        if (mb_strpos($className, 'Controllers') === false)
+        if (strpos($className, 'Controllers') === false)
         {
             $this->system->log()->notice("Fully qualified Controller class name does not contain 'Controllers' so we can't automatically discern the sub template name.");
             return;

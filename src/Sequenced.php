@@ -76,6 +76,7 @@ abstract class Sequenced
         }
         catch (\Exception $exception)
         {
+            $this->statusCode = 500;
             $this->executeQueues = false;
             $this->system->log()->error(
                 "An error occurred while processing the controller sequence.",
