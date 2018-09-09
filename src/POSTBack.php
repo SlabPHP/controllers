@@ -112,6 +112,12 @@ class POSTBack extends Sequenced
     protected function buildOutputObject()
     {
         $data = new \stdClass();
+
+        if (empty($this->redirectURL) && !empty($_SERVER['HTTP_REFERER']))
+        {
+            $this->redirectURL = $_SERVER['HTTP_REFERER'];
+        }
+        
         $data->url = $this->redirectURL;
 
         $output = new \Slab\Controllers\Response(
