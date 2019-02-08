@@ -83,7 +83,7 @@ class FeedTest extends \PHPUnit\Framework\TestCase
         $response = $page->executeControllerLifecycle();
 
         $testOutput = new \stdClass();
-        $testOutput->callback = null;
+        $testOutput->callback = 'something';
         $testOutput->feedData = new \stdClass();
 
         $this->assertEquals(\Slab\Controllers\Feed::RESOLVER_XML, $response->getResolver());

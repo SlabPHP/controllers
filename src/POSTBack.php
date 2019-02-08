@@ -55,7 +55,10 @@ class POSTBack extends Sequenced
      */
     protected function requireSubmitValue()
     {
-        if ($this->system->input()->post('submit')) return;
+        if ($this->system->input()->post('submit')) {
+            echo 'LOOK: ' . $this->system->input()->post('submit') . PHP_EOL;
+            return;
+        }
 
         $this->setNotReady("No submit value present.");
     }

@@ -34,6 +34,8 @@ class POSTBackTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals(['Content-type'=>'text/html'], $response->getHeaders());
         $this->assertEquals($testOutput, $response->getData());
+
+        unset($_POST['submit']);
     }
 
     /**
@@ -51,7 +53,7 @@ class POSTBackTest extends \PHPUnit\Framework\TestCase
 
         $response = $page->executeControllerLifecycle();
 
-        $this->assertEquals(\Slab\Controllers\Sequenced::ERROR_DISPLAY_RESOLVER, $response->getResolver());
+        $this->assertEquals(\Slab\Controllers\POSTBack::ERROR_DISPLAY_RESOLVER, $response->getResolver());
         $this->assertEquals(500, $response->getStatusCode());
         $this->assertEquals(['Content-type'=>'text/html'], $response->getHeaders());
         $this->assertContains('Error 500', $response->getData());

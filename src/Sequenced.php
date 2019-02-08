@@ -77,7 +77,7 @@ abstract class Sequenced
         catch (\Exception $exception)
         {
             $this->executeQueues = false;
-            $this->system->log()->error("An error occurred while processing the controller sequence.", $exception);
+            $this->system->log()->error("An error occurred while processing the controller sequence.", [$exception]);
         }
 
         if (empty($this->executeQueues)) {
@@ -126,9 +126,13 @@ abstract class Sequenced
         $this->executeQueues = false;
         $this->statusCode = $statusCode;
 
+        $this->displayResolver = static::ERROR_DISPLAY_RESOLVER;
+
         if (!empty($message) && $this->system->log())
         {
             $this->system->log()->error($message, [$exception]);
         }
+
+        throw new \Exception('Page Not Ready: ' . $message);
     }
 }
